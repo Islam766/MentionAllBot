@@ -48,7 +48,7 @@ async def mentionall(event):
     return await event.respond("**Только администраторы могут упоминать всех!**")
   
   if event.pattern_match.group(1) and event.is_reply:
-    return await event.respond("__Give me one argument!__")
+    return await event.respond("**Дайте мне аргумент!**")
   elif event.pattern_match.group(1):
     mode = "text_on_cmd"
     msg = event.pattern_match.group(1)
@@ -56,9 +56,9 @@ async def mentionall(event):
     mode = "text_on_reply"
     msg = await event.get_reply_message()
     if msg == None:
-        return await event.respond("__)__")
+        return await event.respond("Ответить на сообщение или дать мне текст, чтобы упомянуть других!")
   else:
-    return await event.respond("__Reply to a message or give me some text to mention others!__")
+    return await event.respond("Ответить на сообщение или дать мне текст, чтобы упомянуть других!")
   
   spam_chats.append(chat_id)
   usrnum = 0
@@ -85,13 +85,13 @@ async def mentionall(event):
 @client.on(events.NewMessage(pattern="^/finish$"))
 async def cancel_spam(event):
   if not event.chat_id in spam_chats:
-    return await event.respond('__There is no proccess on going...__')
+    return await event.respond('**Остановлено!**')
   else:
     try:
       spam_chats.remove(event.chat_id)
     except:
       pass
-    return await event.respond('__Stopped.__')
+    return await event.respond('**Остановлено!**')
 
 print(">> BOT STARTED <<")
 client.run_until_disconnected()
